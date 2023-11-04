@@ -1,5 +1,18 @@
+import { ChakraProvider } from '@chakra-ui/react';
+// css
 import '../styles/globals.css';
+import { themeOptions } from '../styles/themeOptions';
+// components
+import PlayerLayout from '../components/playerLayout';
 
-export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
-}
+const MyApp = ({ Component, pageProps }) => {
+  return (
+    <ChakraProvider theme={themeOptions}>
+      <PlayerLayout>
+        <Component {...pageProps} />
+      </PlayerLayout>
+    </ChakraProvider>
+  );
+};
+
+export default MyApp;
