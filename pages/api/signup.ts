@@ -2,14 +2,14 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import cookie from 'cookie';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+// config
+import { jwtSecretKey } from '../../config';
 // lib
 import prisma from '../../lib/prisma';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const salt = bcrypt.genSaltSync();
   const { email, password } = req.body;
-
-  const secretKey = process.env.JWT_SECRET;
 
   let user;
 
@@ -34,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       id: user.id,
       time: Date.now(),
     },
-    secretKey,
+    jwtSecretKey,
     {
       expiresIn: '8h',
     },
