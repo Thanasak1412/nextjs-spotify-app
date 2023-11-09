@@ -8,9 +8,13 @@ import PlayerLayout from '../components/playerLayout';
 const MyApp = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={themeOptions}>
-      <PlayerLayout>
+      {Component.authPage ? (
         <Component {...pageProps} />
-      </PlayerLayout>
+      ) : (
+        <PlayerLayout>
+          <Component {...pageProps} />
+        </PlayerLayout>
+      )}
     </ChakraProvider>
   );
 };

@@ -16,6 +16,8 @@ import {
   MdPlaylistAdd,
   MdFavorite,
 } from 'react-icons/md';
+// hooks
+import { usePlaylist } from '../lib/hooks';
 
 const navMenu = [
   {
@@ -47,11 +49,6 @@ const navMenuItemPlaylist = [
     link: 'favorites',
   },
 ];
-
-const playlists = [...Array(50)].map((_, i) => ({
-  label: `Playlist ${i}`,
-  link: '/',
-}));
 
 type IProps = {
   menu: {
@@ -86,6 +83,8 @@ const NavMenuItem = ({ menu }: IProps) => {
 };
 
 const Sidebar = () => {
+  const { playlists } = usePlaylist();
+
   return (
     <Box
       width="100%"
@@ -118,7 +117,10 @@ const Sidebar = () => {
         <Box overflowY="auto">
           <List spacing={2}>
             {playlists.map((playlist) => (
-              <NavMenuItem menu={playlist} key={playlist.label} />
+              <NavMenuItem
+                menu={{ label: playlist.playlistName, link: '', icon: '' }}
+                key={playlist.playlistName}
+              />
             ))}
           </List>
         </Box>
