@@ -8,6 +8,7 @@ import {
   LinkOverlay,
   LinkBox,
   Divider,
+  GridItem,
 } from '@chakra-ui/layout';
 import {
   MdHome,
@@ -86,46 +87,49 @@ const Sidebar = () => {
   const { playlists } = usePlaylist();
 
   return (
-    <Box
-      width="100%"
-      height="calc(100vh - 100px)"
-      paddingX="3"
-      bgColor="black"
-      color="gray"
-    >
+    <GridItem colSpan={1} rowSpan={1}>
       <Box
+        width="100%"
         height="100%"
-        display="flex"
-        flexDirection="column"
-        gap={8}
-        paddingY="3"
+        gridColumn="1"
+        paddingX="3"
+        bgColor="black"
+        color="gray"
       >
-        <Box width="120px" paddingX="5">
-          <NextImage src="/logo.svg" width={120} height={60} alt="icon" />
-        </Box>
-        <List spacing={2}>
-          {navMenu.map((menu) => (
-            <NavMenuItem menu={menu} key={menu.label} />
-          ))}
-        </List>
-        <List spacing={2}>
-          {navMenuItemPlaylist.map((menu) => (
-            <NavMenuItem menu={menu} key={menu.label} />
-          ))}
-        </List>
-        <Divider borderColor="gray.700" />
-        <Box overflowY="auto">
+        <Box
+          height="100%"
+          display="flex"
+          flexDirection="column"
+          gap={8}
+          paddingY="3"
+        >
+          <Box width="120px" paddingX="5">
+            <NextImage src="/logo.svg" width={120} height={60} alt="icon" />
+          </Box>
           <List spacing={2}>
-            {playlists.map((playlist) => (
-              <NavMenuItem
-                menu={{ label: playlist.playlistName, link: '', icon: '' }}
-                key={playlist.playlistName}
-              />
+            {navMenu.map((menu) => (
+              <NavMenuItem menu={menu} key={menu.label} />
             ))}
           </List>
+          <List spacing={2}>
+            {navMenuItemPlaylist.map((menu) => (
+              <NavMenuItem menu={menu} key={menu.label} />
+            ))}
+          </List>
+          <Divider borderColor="gray.700" />
+          <Box overflowY="auto">
+            <List spacing={2}>
+              {playlists.map((playlist) => (
+                <NavMenuItem
+                  menu={{ label: playlist.playlistName, link: '', icon: '' }}
+                  key={playlist.playlistName}
+                />
+              ))}
+            </List>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </GridItem>
   );
 };
 

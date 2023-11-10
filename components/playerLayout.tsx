@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/layout';
+import { Box, Grid, GridItem } from '@chakra-ui/layout';
 import { ReactNode } from 'react';
 // components
 import Sidebar from './sidebar';
@@ -10,16 +10,24 @@ type Props = {
 const PlayerLayout = ({ children }: Props) => {
   return (
     <Box width="100vw" height="100vh">
-      <Box width="250px" position="absolute" top={0} left={0}>
+      <Grid
+        height="100%"
+        templateColumns="minmax(13.25rem, 1fr) 4fr"
+        templateRows="90% 10%"
+      >
         <Sidebar />
-      </Box>
-      <Box marginLeft="250px" marginBottom="100px">
-        {children}
-      </Box>
-
-      <Box position="absolute" bottom={0} left={0}>
-        Music bar
-      </Box>
+        <GridItem colSpan={2} rowSpan={1}>
+          {children}
+        </GridItem>
+        <GridItem
+          colSpan={3}
+          rowSpan={2}
+          bg="gray.900"
+          padding="0.75rem 0.5rem"
+        >
+          Music bar
+        </GridItem>
+      </Grid>
     </Box>
   );
 };
