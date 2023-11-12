@@ -3,6 +3,8 @@ import { Box, Flex, Text } from '@chakra-ui/layout';
 import { Image } from '@chakra-ui/react';
 // lib
 import prisma from '../lib/prisma';
+// hooks
+import { useMe } from '../lib/hooks';
 // components
 import GradientLayout from '../components/gradientLayout';
 
@@ -11,15 +13,19 @@ type Props = {
 };
 
 const Home = ({ artists }: Props) => {
-  console.log('artists => ', artists);
+  const { user, isLoading } = useMe();
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <GradientLayout
       color="gray"
       image="/profile.jpeg"
-      title="Thanasak Srisaeng"
+      title={`${user.firstName} ${user.lastName}`}
       subtitle="Profile"
-      description="15 Public Playlists"
+      description={`${user.playlistsCount} Public Playlists`}
       roundImage
       sx={{ objectPosition: '60%', mixBlendMode: 'luminosity' }}
     >
@@ -45,7 +51,8 @@ const Home = ({ artists }: Props) => {
             >
               <Image
                 src={`https://reqres.in/img/faces/${i + 7}-image.jpg`}
-                width="100%"
+                maxWidth="100%"
+                height="auto"
                 objectFit="cover"
                 borderRadius="100%"
               />

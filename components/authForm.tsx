@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, SyntheticEvent, useState } from 'react';
-import { useSWRConfig } from 'swr';
 import { Flex, Box } from '@chakra-ui/layout';
 import { Button, Input } from '@chakra-ui/react';
 import NextImage from 'next/image';
@@ -62,8 +61,14 @@ const AuthForm: FC<Props> = ({ mode, url }) => {
         <NextImage src="/logo.svg" alt="logo" width={120} height={60} />
       </Flex>
       <Flex justify="center" align="center" height="calc(100vh - 100px)">
-        <form onSubmit={handleSubmit}>
-          <Flex width="md" flexDirection="column" gap={3}>
+        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+          <Flex
+            width={{ sm: '100%', md: 'md' }}
+            flexDirection="column"
+            gap={3}
+            paddingX={{ base: 4, md: 0 }}
+            margin="0 auto"
+          >
             <Input
               placeholder="Email"
               type="email"

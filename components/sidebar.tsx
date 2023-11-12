@@ -1,5 +1,8 @@
 import NextImage from 'next/image';
 import NextLink from 'next/link';
+import { IconType } from 'react-icons/lib';
+import { UrlObject } from 'url';
+
 import {
   Box,
   List,
@@ -20,7 +23,13 @@ import {
 // hooks
 import { usePlaylist } from '../lib/hooks';
 
-const navMenu = [
+type NavMenu = {
+  label: string;
+  icon: IconType;
+  link: string | UrlObject;
+}[];
+
+const navMenu: NavMenu = [
   {
     label: 'Home',
     icon: MdHome,
@@ -38,7 +47,7 @@ const navMenu = [
   },
 ];
 
-const navMenuItemPlaylist = [
+const navMenuItemPlaylist: NavMenu = [
   {
     label: 'Create Playlist',
     icon: MdPlaylistAdd,
@@ -54,8 +63,8 @@ const navMenuItemPlaylist = [
 type IProps = {
   menu: {
     label: string;
-    link: string;
-    icon?: any;
+    link: string | UrlObject;
+    icon?: IconType;
   };
 };
 
@@ -103,8 +112,13 @@ const Sidebar = () => {
           gap={8}
           paddingY="3"
         >
-          <Box width="120px" paddingX="5">
-            <NextImage src="/logo.svg" width={120} height={60} alt="icon" />
+          <Box maxWidth="7.5rem" height="auto" position="relative" paddingX="5">
+            <NextImage
+              src="/logo.svg"
+              alt="logo icon"
+              layout="fill"
+              style={{ verticalAlign: 'middle', fontStyle: 'italic' }}
+            />
           </Box>
           <List spacing={2}>
             {navMenu.map((menu) => (
@@ -121,7 +135,13 @@ const Sidebar = () => {
             <List spacing={2}>
               {playlists.map((playlist) => (
                 <NavMenuItem
-                  menu={{ label: playlist.playlistName, link: '', icon: '' }}
+                  menu={{
+                    label: playlist.playlistName,
+                    link: {
+                      pathname: '/playlist/[id]',
+                      query: { id: playlist.id },
+                    },
+                  }}
                   key={playlist.playlistName}
                 />
               ))}

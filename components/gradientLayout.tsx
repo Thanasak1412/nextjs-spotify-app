@@ -10,7 +10,7 @@ type Props = {
   subtitle: string;
   description: string;
   roundImage: boolean;
-  sx: CSSObject;
+  sx?: CSSObject;
 };
 
 const GradientLayout = ({
@@ -29,11 +29,16 @@ const GradientLayout = ({
       overflowY="auto"
       bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.700 40%, rgba(0, 0, 0, 0.95) 75%)`}
     >
-      <Flex bg={`${color}.600`} padding="40px 40px 20px" align="flex-end">
-        <Box padding="20px 20px 0">
+      <Flex
+        bg={`${color}.600`}
+        padding="2.5rem 2.5rem 1.25rem 2rem"
+        align="flex-end"
+      >
+        <Box padding="1.25rem 1.25rem 0 0">
           <Image
             src={image}
-            width="100%"
+            maxWidth="100%"
+            height="auto"
             boxSize="160px"
             boxShadow="2xl"
             borderRadius={roundImage ? '100%' : '3px'}
@@ -56,6 +61,10 @@ const GradientLayout = ({
       <Box>{children}</Box>
     </Box>
   );
+};
+
+GradientLayout.defaultProps = {
+  sx: {},
 };
 
 export default GradientLayout;
