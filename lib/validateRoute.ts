@@ -1,15 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { User } from '@prisma/client';
 import prisma from './prisma';
 // config
 import { jwtSecretKey } from '../config';
-
-interface IJwtPayload extends JwtPayload {
-  email: string;
-  id: number;
-  time: number;
-}
+// types
+import { IJwtPayload } from '../types/jwt';
 
 type HandlerType = (
   // eslint-disable-next-line no-unused-vars
