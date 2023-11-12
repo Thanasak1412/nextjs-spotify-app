@@ -8,7 +8,7 @@ export default validateRoute(async (_, res, user) => {
         userId: user.id,
       },
       orderBy: {
-        playlistName: 'asc',
+        id: 'asc',
       },
     });
 
