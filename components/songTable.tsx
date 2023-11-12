@@ -1,4 +1,4 @@
-import { Artist, Song } from '@prisma/client';
+import { Actions, useStoreActions } from 'easy-peasy';
 import { Box } from '@chakra-ui/layout';
 import {
   TableContainer,
@@ -13,14 +13,20 @@ import {
 import { BsPlayFill } from 'react-icons/bs';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { convertNumberToTime, timeAgo } from '../lib/formatTime';
+import { SongModel } from '../lib/store';
+// types
+import { ISong } from '../types/song';
 
-type Props = {
-  songs: (Song & {
-    artist: Pick<Artist, 'name' | 'id'>;
-  })[];
-};
+const SongTable = ({ songs }: { songs: ISong[] }) => {
+  const { onActiveSongs, onActiveSong } = useStoreActions(
+    (actions: Actions<SongModel>) => actions,
+  );
 
-const SongTable = ({ songs }: Props) => {
+  const handlePlay = (song?: ISong) => {
+    onActiveSong(song ?? songs[0]);
+    onActiveSongs(songs);
+  };
+
   return (
     <Box padding="7" mb="8" bg="transparent" color="whiteAlpha.600">
       <IconButton
@@ -29,23 +35,28 @@ const SongTable = ({ songs }: Props) => {
         colorScheme="green"
         size="lg"
         isRound
+        onClick={() => handlePlay()}
       />
       <TableContainer>
         <Table variant="unstyled">
           <Thead borderBottom="1px solid" borderColor="whiteAlpha.400">
-            <Tr textTransform="uppercase">
+            <Tr textTransform="uppercase" cursor="pointer">
               <Th>#</Th>
               <Th>title</Th>
               <Th>album</Th>
               <Th>date added</Th>
-              <Th sx={{ textAlign: '-webkit-center' }}>
+              <Th>
                 <AiOutlineClockCircle fontSize={16} />
               </Th>
             </Tr>
           </Thead>
           <Tbody>
             {songs.map((song) => (
-              <Tr key={song.id}>
+              <Tr
+                key={song.id}
+                onClick={() => handlePlay(song)}
+                cursor="pointer"
+              >
                 <Td isNumeric>{song.id}</Td>
                 <Td color="whiteAlpha.800">{song.songName}</Td>
                 <Td>-</Td>

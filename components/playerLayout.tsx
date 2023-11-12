@@ -2,6 +2,7 @@ import { Box, Grid, GridItem } from '@chakra-ui/layout';
 import { ReactNode } from 'react';
 // components
 import Sidebar from './sidebar';
+import PlayerBar from './playerBar';
 
 type Props = {
   children: ReactNode;
@@ -23,9 +24,9 @@ const PlayerLayout = ({ children }: Props) => {
           colSpan={3}
           rowSpan={2}
           bg="gray.900"
-          padding="0.75rem 0.5rem"
+          padding="0.5rem 0.75rem"
         >
-          Music bar
+          <PlayerBar />
         </GridItem>
       </Grid>
     </Box>
