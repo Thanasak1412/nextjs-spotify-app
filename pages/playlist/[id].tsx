@@ -51,7 +51,19 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
   req,
 }) => {
-  const userId = validateToken(req.cookies.TRAX_ACCESS_TOKEN);
+  let userId: number;
+
+  try {
+    userId = validateToken(req.cookies.TRAX_ACCESS_TOKEN);
+  } catch (error) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/signin',
+      },
+    };
+  }
+
   const [playlist] = await prisma.playlist.findMany({
     where: {
       id: +query.id,
