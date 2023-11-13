@@ -28,9 +28,10 @@ import { SongModel } from '../lib/store';
 type Props = {
   songs: ISong[];
   activeSong: ISong;
+  volume: number;
 };
 
-const Player = ({ songs, activeSong }: Props) => {
+const Player = ({ songs, activeSong, volume }: Props) => {
   const [playing, setPlaying] = useState(true);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
@@ -126,6 +127,7 @@ const Player = ({ songs, activeSong }: Props) => {
   useEffect(() => {
     setSeek(0.0);
     setDuration(activeSong.duration);
+    handlePlaying(true);
   }, [activeSong]);
 
   useEffect(() => {
@@ -148,6 +150,7 @@ const Player = ({ songs, activeSong }: Props) => {
           loop={repeat}
           onLoad={onLoad}
           onEnd={onEnd}
+          volume={volume}
         />
       )}
       <Box width="100%">
@@ -232,7 +235,7 @@ const Player = ({ songs, activeSong }: Props) => {
             <RangeSliderTrack bg="gray.800">
               <RangeSliderFilledTrack bg="gray.600" />
             </RangeSliderTrack>
-            <RangeSliderThumb boxSize={5} index={0} display="none" />
+            <RangeSliderThumb index={0} display="none" />
           </RangeSlider>
           <Text fontSize="xs">{convertNumberToTime(duration)}</Text>
         </Flex>
